@@ -1,0 +1,16 @@
+# Ignore all .root files
+*.root
+
+# Ignore all .d files
+*.d
+
+# Ignore all .so files
+*.so
+
+# Ignore all .pcm files
+*.pcm
+
+# Ignore the node_modules directory
+#node_modules/
+
+
