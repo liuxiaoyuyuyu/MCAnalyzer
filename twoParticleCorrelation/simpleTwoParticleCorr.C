@@ -45,7 +45,10 @@ TH2F createSimpleSignalDist(std::vector<Int_t> multiplicityVector, std::vector<I
     std::string signalTitle = "Normalized Signal Distribution for " + title;
 
     // Histogram for the signal distribution
-    TH2F hSignal("hSignal", signalTitle.c_str(), 100, -5, 5, 100, -TMath::Pi(), TMath::Pi());
+    //TH2F hSignal("hSignal", signalTitle.c_str(), 100, -5, 5, 100, -TMath::Pi(), TMath::Pi());
+    const float         EtaBW = 0.3; 
+    const float         PhiBW = TMath::Pi()/16;
+    TH2F hSignal("hSignal", signalTitle.c_str(),41,-(20*EtaBW)-(0.5*EtaBW),(20*EtaBW)+(0.5*EtaBW),33,-(8*PhiBW)-0.5*PhiBW,(24*PhiBW)+0.5*PhiBW);
 
     // ***** EVENT LOOP *****
     reader->Restart(); // Restarting event loop
@@ -93,6 +96,10 @@ TH2F createSimpleSignalDist(std::vector<Int_t> multiplicityVector, std::vector<I
                 // Filling the histograms multiple times due to symmetries
                 hSignal.Fill(deltaEta, deltaPhi);
                 hSignal.Fill(deltaEta, -deltaPhi);
+                hSignal.Fill(-deltaEta, -deltaPhi);
+                hSignal.Fill(-deltaEta, deltaPhi);
+                hSignal.Fill(deltaEta, 2*TMath::Pi()-deltaPhi);
+                hSignal.Fill(-deltaEta, 2*TMath::Pi()-deltaPhi);
 
                 //hSignal.Fill(deltaEta, deltaPhi, 1.0/(weightVector[eventIndex]));
                 //hSignal.Fill(deltaEta, -deltaPhi, 1.0/(weightVector[eventIndex]));
@@ -178,7 +185,11 @@ TH2F createBackgroundDist(std::vector<Int_t> multiplicityVector, Int_t numMixFac
     std::string backgroundTitle = "Background Distribution for " + title;
 
     // Histogram for the background distribution
-    TH2F hBackground("hBackground", backgroundTitle.c_str(), 100, -5, 5, 100, -TMath::Pi(), TMath::Pi());
+    //TH2F hBackground("hBackground", backgroundTitle.c_str(), 100, -5, 5, 100, -TMath::Pi(), TMath::Pi());
+    
+    const float         EtaBW = 0.3; 
+    const float         PhiBW = TMath::Pi()/16;
+    TH2F hBackground("hBackground", backgroundTitle.c_str(),41,-(20*EtaBW)-(0.5*EtaBW),(20*EtaBW)+(0.5*EtaBW),33,-(8*PhiBW)-0.5*PhiBW,(24*PhiBW)+0.5*PhiBW);
 
     // ***** PSEUDOPARTICLE MIXING *****
     // Calculating the number of pseudoparticles samples:
@@ -213,6 +224,10 @@ TH2F createBackgroundDist(std::vector<Int_t> multiplicityVector, Int_t numMixFac
             // Filling the histograms twice times due to symmetries
             hBackground.Fill(deltaEta, deltaPhi);
             hBackground.Fill(deltaEta, -deltaPhi);
+            hBackground.Fill(-deltaEta, -deltaPhi);
+            hBackground.Fill(-deltaEta, deltaPhi);
+            hBackground.Fill(deltaEta, 2*TMath::Pi()-deltaPhi);
+            hBackground.Fill(-deltaEta, 2*TMath::Pi()-deltaPhi);
 
             ///hBackground.Fill(deltaEta, deltaPhi);
         }
